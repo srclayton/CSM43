@@ -29,26 +29,14 @@ def insertOne(name, email, password, team ,su):
 
 def findOne(field, value):
     url = URL  +"findOne"
-    
-    if(field == "user_tracking_number"):
-        payload = json.dumps({
-            "collection": "dboUsuario",
-            "database": "Distribuidora",
-            "dataSource": "RochaESilvaDB",
-            "filter": {
-                "_id":value[1],
-                field: value[0]
-            }
-        })
-    else:    
-        payload = json.dumps({
-            "collection": "User",
-            "database": "CSM43",
-            "dataSource": "RochaESilvaDB",
-            "filter": {
-                field: value
-            }
-        })
+    payload = json.dumps({
+        "collection": "User",
+        "database": "CSM43",
+        "dataSource": "RochaESilvaDB",
+        "filter": {
+            field: value
+        }
+    })
     response = requests.request("POST", url, headers=headers, data=payload)
     resp = response.json()
     if(resp["document"] is None):
