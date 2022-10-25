@@ -1,5 +1,6 @@
 import requests
 import json
+from datetime import datetime
 a = open("password.txt","r")
 apiKey = a.read()
 a.close()
@@ -21,7 +22,8 @@ def insertOne(name, email, password, team ,su):
             "name": name,
             "email":email,
             "password":password,
-            "team": team
+            "team": team,
+            "registerDate": datetime.today().strftime('%Y-%m-%d %H:%M')
         }
     })
     response = requests.request("POST", url, headers=headers, data=payload)
