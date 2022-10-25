@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class FormLogin extends AppCompatActivity {
 
-    Button btnSigIn, btnSigUp;
+    protected Button btnSigIn, btnSigUp;
 
 
     @Override
@@ -17,7 +17,7 @@ public class FormLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_login);
         btnSigUp=findViewById(R.id.btnSigUpView);
-        btnSigIn=findViewById(R.id.btnSigIn);
+        btnSigIn=findViewById(R.id.btnSignIn);
 
         btnSigUp.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -7,7 +7,7 @@
     tools:context=".FormLogin">
 
     <EditText
-        android:id="@+id/txtEmail"
+        android:id="@+id/txtName"
         android:layout_width="350dp"
         android:layout_height="48dp"
         android:layout_marginTop="150dp"
@@ -16,7 +16,7 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtPassword"
+        app:layout_constraintBottom_toTopOf="@+id/txtEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,10 +30,10 @@
         android:text="Não possui uma conta ? "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSigIn" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
     <EditText
-        android:id="@+id/txtPassword"
+        android:id="@+id/txtEmail"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -45,17 +45,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
     <Button
-        android:id="@+id/btnSigIn"
+        android:id="@+id/btnSignIn"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Acessar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
     <Button
         android:id="@+id/btnSigUpView"
