@@ -14,7 +14,7 @@
         tools:layout_editor_absoluteY="0dp">
 
         <EditText
-            android:id="@+id/txtPassword4"
+            android:id="@+id/txtPassword"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
@@ -27,10 +27,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
         <EditText
-            android:id="@+id/txtEmail"
+            android:id="@+id/txtName"
             android:layout_width="350dp"
             android:layout_height="48dp"
             android:layout_marginTop="150dp"
@@ -39,14 +39,14 @@
             android:hint="Nome"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
-            app:layout_constraintBottom_toTopOf="@+id/txtPassword"
+            app:layout_constraintBottom_toTopOf="@+id/txtEmail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/txtPassword"
+            android:id="@+id/txtEmail"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:autofillHints=""
@@ -58,16 +58,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
         <Button
-            android:id="@+id/btnSigIn"
+            android:id="@+id/btnSignUp"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="112dp"
-            android:text="Cadastrar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="60dp"
+            android:text="CADASTRAR"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
