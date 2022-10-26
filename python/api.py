@@ -15,10 +15,10 @@ def password_Authentication():
     password = request.args.get('password')
     response = cryptocodeLocal.checkLogin(email, password)
     if(response):
-
         return json.dumps({'success': 'True', 'message': 'user found'})
+    elif(response is False):
+        return json.dumps({'success': 'False', 'message': 'The Username or Password is Incorrect'})
     else:
-
         return json.dumps({'success': 'False', 'message': 'user not found'})
 
 
