@@ -1,23 +1,41 @@
-import requests
+import pymongo
 import json
+from flask import Flask
+from flask import request
 from datetime import datetime
-a = open("password.txt","r")
-apiKey = a.read()
+import sys
+DB = "CSM43"
+a = open("uri.txt","r")
+URI = a.read()
 a.close()
-headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Request-Headers': '*',
-        'api-key': apiKey
-    }
-URL = "https://data.mongodb-api.com/app/data-guzuj/endpoint/data/beta/action/"
+CLIENT = pymongo.MongoClient(URI)
 
-def insertOne(name, email, password, team ,su):
-    url = URL  +"insertOne" 
-    payload = json.dumps({
-        "dataSource": "RochaESilvaDB",
-        "database": "CSM43",
-        "collection": "User",
-        "document": {
+
+#app = Flask(__name__)
+
+#@app.route('/test', methods=['GET'])
+
+def find(field, value, collection):
+#def find():
+    result = CLIENT[DB][collection].find({field:value})
+    strResponse = []
+    
+    for x in result:
+        strResponse.append(x)
+    try:
+        if(strResponse):
+            strResponse = json.dumps(strResponse)
+            jsonResponse = json.loads(strResponse)
+            return json.dumps(jsonResponse)
+    except:
+        return None
+
+#def insertOne():
+def insertOne(name,email,password,team,su):
+    last_id = CLIENT[DB]["User"].find({}, {"_id": 1}, sort=[('_id', -1)]).limit(sys.maxsize).next()
+    last_id["_id"] += 1
+    payload = {
+            "_id":last_id["_id"],
             "su":su,
             "name": name,
             "email":email,
@@ -25,85 +43,11 @@ def insertOne(name, email, password, team ,su):
             "team": team,
             "registerDate": datetime.today().strftime('%Y-%m-%d %H:%M')
         }
-    })
-    response = requests.request("POST", url, headers=headers, data=payload)
-    return response
-
-def findOne(field, value):
-    url = URL  +"findOne"
-    payload = json.dumps({
-        "collection": "User",
-        "database": "CSM43",
-        "dataSource": "RochaESilvaDB",
-        "filter": {
-            field: value
-        }
-    })
-    response = requests.request("POST", url, headers=headers, data=payload)
-    resp = response.json()
-    if(resp["document"] is None):
-        return None
-    else:
-        return resp["document"]
-
-def updateOne(userId: int, userTrackingNumber: int):
-    jsonUpdate = findOne("_id",userId)
-    jsonUpdate["user_tracking_number"].append(userTrackingNumber)
-    url = URL + "updateOne"
-
-    payload = json.dumps({
-    "collection": "dboUsuario",
-    "database": "Distribuidora",
-    "dataSource": "RochaESilvaDB",
-    "filter": {"_id": userId},
-    "update": {
-          "$set": {
-              "user_tracking_number": jsonUpdate["user_tracking_number"],
-          }
-      }
-    })
-    response = requests.request("POST", url, headers=headers, data=payload)
-    resp = response.json()    
-    return resp
-
-def deleteOne(userId: int, userTrackingNumber:int):
-    jsonUpdate = findOne("_id",userId)
-    if(jsonUpdate is None):
+    try:
+        response = CLIENT[DB]["User"].insert_one(payload)
+        return True
+    except:
         return False
-    i = 0
-    for x in jsonUpdate["user_tracking_number"]:
-         if(x == userTrackingNumber):
-            del(jsonUpdate["user_tracking_number"][i])
-         i += 1
-    print(jsonUpdate["user_tracking_number"])
-    url = "https://data.mongodb-api.com/app/data-guzuj/endpoint/data/beta/action/updateOne"
 
-    payload = json.dumps({
-    "collection": "dboUsuario",
-    "database": "Distribuidora",
-    "dataSource": "RochaESilvaDB",
-    "filter": {"_id": userId},
-    "update": {
-          "$set": {
-              "user_tracking_number": jsonUpdate["user_tracking_number"],
-          }
-      }
-    })
-    response = requests.request("POST", url, headers=headers, data=payload)
-    resp = response.json()   
-    print(resp) 
-    return resp
-
-def insertLog(id, userName, content):
-    url = "https://data.mongodb-api.com/app/data-guzuj/endpoint/data/beta/action/insertOne"
-    payload = json.dumps({
-        "dataSource": "RochaESilvaDB",
-        "database": "Distribuidora",
-        "collection": "dboLogs",
-        "document": {
-            "_id": id, 
-            "user_name": userName,
-            "log":content,
-        }
-    })
-    response = requests.request("POST", url, headers=headers, data=payload)
+#if __name__ == '__main__':
+    #app.run()

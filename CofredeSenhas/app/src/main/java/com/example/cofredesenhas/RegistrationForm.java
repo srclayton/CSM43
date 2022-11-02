@@ -24,7 +24,6 @@ public class RegistrationForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG,"Iniciada!");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_form);
         btnSignUp=findViewById(R.id.btnSignUp);
@@ -42,9 +41,6 @@ public class RegistrationForm extends AppCompatActivity {
                 }
             }else
                 showDialog(false,"addParameters");
-
-
-
         });
 
 
@@ -54,10 +50,10 @@ public class RegistrationForm extends AppCompatActivity {
         name=findViewById(R.id.txtName);
         email=findViewById(R.id.txtEmail);
         password=findViewById(R.id.txtPassword);
-        if(name.getText().toString().length() < 1 ||
-                email.getText().toString().length() < 1 ||
-                password.getText().toString().length() < 1 )
-            return false;
+        //if(name.getText().toString().length() < 1 ||
+          //      email.getText().toString().length() < 1 ||
+            //    password.getText().toString().length() < 1 )
+            //return false;
 
 
 
