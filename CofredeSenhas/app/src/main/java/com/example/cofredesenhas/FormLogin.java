@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,15 +50,23 @@ public class FormLogin extends AppCompatActivity {
                 parameters.add(password.getText().toString());
                 MyUrlRequestCallback apiResponse = new MyUrlRequestCallback("GET", "password_Authentication", parameters);
                 try {
-                    response = new JSONObject(apiResponse.execute().get());
-                    if(response.getBoolean("success")){
-                        Intent secondView;
-                        secondView=new Intent(getApplicationContext(), MainActivity.class);
+                    JSONArray result = new JSONArray(apiResponse.execute().get());
+                    response = new JSONObject();
+                    response = result.getJSONObject(0);
+                    if(result.getJSONObject(1).getBoolean("success")){
+                        User user = new User(response.getInt("_id"),
+                                response.getBoolean("su"),
+                                response.getString("name"),
+                                response.getString("email"),
+                                response.getInt("team"),
+                                response.getString("registerDate"));
+                        Log.d(TAG, "RESPONSE: " +response.toString());
+                        Intent secondView = new Intent(getApplicationContext(), MainActivity.class);
+                        secondView.putExtra("User", user);
                         startActivity(secondView);
                     }else
                         showDialog(response.getString("message"));
 
-                    Log.d(TAG, String.valueOf(response));
                 }catch (ExecutionException | JSONException | InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -34,6 +34,8 @@ public class MyUrlRequestCallback extends AsyncTask<Void, Void, String> {
             urlParameters = "?email="+parameters.get(0) + "&password=" +parameters.get(1);
         else if(route.equals("registrationForm"))
             urlParameters = "?name="+parameters.get(0)+"&email="+parameters.get(1)+"&password="+parameters.get(2)+"&team="+parameters.get(3)+"&su="+parameters.get(4);
+        else if(route.equals("getItem"))
+            urlParameters = "?idUser="+parameters.get(0)+"&item="+parameters.get(1);
         if(parameters == null)
             urlParameters = "";
         urlParameters = route + urlParameters;
@@ -44,6 +46,9 @@ public class MyUrlRequestCallback extends AsyncTask<Void, Void, String> {
             connection.setRequestProperty("Content-type", "application/json");
             connection.setDoOutput(true);
             connection.setConnectTimeout(30000);
+            /*=======================================
+
+             */
             if(this.method.equals("GET")){
                 StringBuilder responseApi = new StringBuilder();
                 connection.connect();
@@ -54,13 +59,10 @@ public class MyUrlRequestCallback extends AsyncTask<Void, Void, String> {
                 response = responseApi.toString();
             }else{
                 StringBuffer responseApi;
-                // For POST only - START
                 OutputStream os = connection.getOutputStream();
                 os.write(parameters.get(0).getBytes());
                 os.flush();
                 os.close();
-                // For POST only - END
-
                 int responseCode = connection.getResponseCode();
                 Log.d(TAG, "POST Response Code :: " + responseCode);
 
@@ -69,13 +71,11 @@ public class MyUrlRequestCallback extends AsyncTask<Void, Void, String> {
                             connection.getInputStream()));
                     String inputLine;
                     responseApi = new StringBuffer();
-
                     while ((inputLine = in.readLine()) != null) {
                         responseApi.append(inputLine);
                     }
                     in.close();
                     response = responseApi.toString();
-                    // print result
                 } else {
                     Log.d(TAG, "POST request not worked");
                 }
