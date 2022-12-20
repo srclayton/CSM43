@@ -36,6 +36,9 @@ public class User implements Serializable {
     public void setFolder(Folder folder) {
         this.folder.add(folder);
     }
+    public void setArrayFolder(ArrayList<Folder> folder){
+        this.folder = folder;
+    }
 
     public void setName(String name){this.name = name;}
 

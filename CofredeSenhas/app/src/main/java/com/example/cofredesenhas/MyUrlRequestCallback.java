@@ -36,6 +36,17 @@ public class MyUrlRequestCallback extends AsyncTask<Void, Void, String> {
             urlParameters = "?name="+parameters.get(0)+"&email="+parameters.get(1)+"&password="+parameters.get(2)+"&team="+parameters.get(3)+"&su="+parameters.get(4);
         else if(route.equals("getItem"))
             urlParameters = "?idUser="+parameters.get(0)+"&item="+parameters.get(1);
+        else if(route.equals("fingerprintLogin"))
+            urlParameters = "?email="+parameters.get(0);
+        else if(route.equals("removeItem") || route.equals("restoreItem"))
+            urlParameters = "?idItem="+parameters.get(1)+"&type="+parameters.get(0);
+        else if(route.equals("insertItem"))
+            if(parameters.get(0).equals("folder"))
+                urlParameters = "?type="+parameters.get(0)+"&folderName="+parameters.get(1)+"&idUser="+parameters.get(2)+"&idTeam="+parameters.get(3);
+            else if( parameters.get(0).equals("creditCard"))
+                urlParameters = "?type="+parameters.get(0)+"&idUser="+parameters.get(1)+"&surname="+parameters.get(2)+"&cardholdername="+parameters.get(3)+"&cardnumber="+parameters.get(4)+"&expirationDate="+parameters.get(5)+"&cvcCode="+parameters.get(6);
+            else if(parameters.get(0).equals("credential"))
+                urlParameters = "?type="+parameters.get(0)+"&idUser="+parameters.get(1)+"&username="+parameters.get(2)+"&credentialName="+parameters.get(3)+"&password="+parameters.get(4)+"&note="+parameters.get(5)+"&idFolder="+parameters.get(6);
         if(parameters == null)
             urlParameters = "";
         urlParameters = route + urlParameters;

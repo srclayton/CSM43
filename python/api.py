@@ -11,6 +11,17 @@ app = Flask(__name__)
 def test():
     return json.dumps({"cod":"200","mensagem":"test"})
 
+@app.route('/fingerprintLogin', methods=['GET'])
+def fingerprintLogin():
+    email = request.args.get('email')
+    response = data_base.find('email', email,'User')
+    if(response):
+        response = json.loads(response)
+        response.append({'success': 'True', 'message': 'user found'})
+        return json.dumps(response)
+    else:
+        return json.dumps({'success': 'False', 'message': 'user not found'})
+
 @app.route('/password_Authentication', methods=['GET'])
 def password_Authentication():
     email = request.args.get('email')
@@ -56,6 +67,81 @@ def getItem():
     else:
         return json.dumps({'success': 'False', 'message': arg})
 
+
+@app.route('/insertItem', methods=['POST'])
+def insertItem():
+    type = request.args.get("type")
+    match type:
+        case "folder":
+            folderName = request.args.get("folderName")
+            idUser = request.args.get("idUser")
+            parameters = list()
+            parameters.append(idUser)
+            parameters.append(folderName)
+            response = data_base.insertOne("insertFolder", parameters)
+            if(response):
+                return json.dumps({'success': 'True', 'message': 'folder inserted'})
+            else:
+                return json.dumps({'success': 'False', 'message': 'folder not inserted'})
+        case "creditCard":
+            parameters = list()
+            cvcCode = request.args.get("cvcCode")
+            expirationDate = request.args.get("expirationDate")
+            cardnumber = request.args.get("cardnumber")
+            cardholdername = request.args.get("cardholdername")
+            surname = request.args.get("surname")
+            idUser = request.args.get("idUser") 
+            parameters.append(cvcCode)
+            parameters.append(expirationDate)
+            parameters.append(cardnumber)
+            parameters.append(cardholdername)
+            parameters.append(surname)
+            parameters.append(idUser)
+            
+            response = data_base.insertOne("insertCreditCard", parameters)
+            if(response):
+                return json.dumps({'success': 'True', 'message': 'card inserted'})
+            else:
+                return json.dumps({'success': 'False', 'message': 'card not inserted'})
+        case "credential":
+            parameters = list()
+            parameters.append(request.args.get("note"))
+            parameters.append(request.args.get("password"))
+            parameters.append(request.args.get("username"))
+            parameters.append(request.args.get("credentialName"))
+            parameters.append(request.args.get("idFolder"))
+            parameters.append(request.args.get("idUser"))
+            response = data_base.insertOne("insertCredential", parameters)
+            if(response):
+                return json.dumps({'success': 'True', 'message': 'credential inserted'})
+            else:
+                return json.dumps({'success': 'False', 'message': 'credential not inserted'})
+
+@app.route('/removeItem', methods=['POST'])
+def removeItem():
+    idItem = request.args.get("idItem")
+    type = request.args.get("type")
+    response = data_base.delete(idItem, type)
+    if(response):
+        return json.dumps({'success': 'True', 'message': 'item updated'})
+    else:
+        return json.dumps({'success': 'False', 'message': 'item not updated'})
+
+@app.route('/restoreItem', methods=['POST'])
+def restoreItem():
+    idItem = request.args.get("idItem")
+    type = request.args.get("type")
+    response = data_base.restore(idItem, type)
+    if(response):
+        return json.dumps({'success': 'True', 'message': 'item updated'})
+    else:
+        return json.dumps({'success': 'False', 'message': 'item not updated'})
+
+@app.route('/checkCreditCard', methods=['GET']):
+def checkCreditCard():
+    numberCard = request.args.get('numberCard')
+    if(numberCard != 0):
+        creditCard.checkCreditCard(numberCard)
 
 if __name__ == '__main__':
     app.run()

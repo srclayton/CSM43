@@ -18,7 +18,13 @@ def registreUser(name,email,password,team,su):
     response = data_base.find("email", email, "User")
     if(response):
         return None
-    response = data_base.insertOne(name, email, cryptocode.encrypt(password,email), team ,su)
+    parameters = list()
+    parameters.append(team)
+    parameters.append(cryptocode.encrypt(password,email))
+    parameters.append(email)
+    parameters.append(name)
+    parameters.append(su)
+    response = data_base.insertOne("registerUser", parameters)
     if(response is False):
         return None
     else:

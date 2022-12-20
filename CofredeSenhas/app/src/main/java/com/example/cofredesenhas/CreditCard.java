@@ -8,14 +8,12 @@ public class CreditCard {
     protected long  cardNumber;
     protected String expirationDate;
     protected String cvcCode;
-    protected String company;
     protected int idFolder;
-    protected String note;
     protected String type;
     Boolean active;
 
 
-    public CreditCard( int id, int idUser, String surname, String cardholerName, long  cardNumber, String expirationDate, String cvcCode, String company, int idFolder, String note, String type,Boolean active){
+    public CreditCard( int id, int idUser, String surname, String cardholerName, long  cardNumber, String expirationDate, String cvcCode, int idFolder, String type,Boolean active){
         this.id = id;
         this.idUser = idUser;
         this.surname = surname;
@@ -23,9 +21,7 @@ public class CreditCard {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvcCode = cvcCode;
-        this.company = company;
         this.idFolder = idFolder;
-        this.note = note;
         this.type =type;
         this.active = active;
     }
@@ -52,5 +48,17 @@ public class CreditCard {
 
     public String getCardholerName() {
         return cardholerName;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public String getCvcCode() {
+        return cvcCode;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }
